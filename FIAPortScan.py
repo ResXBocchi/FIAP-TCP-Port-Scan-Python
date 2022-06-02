@@ -36,8 +36,11 @@ for porta in portas: # realiza as etapas abaixo nas portas do range
                                       #adiciona a porta na lista de abertas
 
 if len(abertas) != 0:
-        print("Portas abertas: {}\nAs demais entre 1 e 1023 estão fechadas"\
-.format(abertas)) # se houver portas abertas as informa
+        print("Portas abertas: {}".format(abertas))
+
+        print("As demais entre 1 e 1023 estão fechadas" if len(sys.argv) == 2 else\
+	      "As demais dentre as portas especificadas estao fechadas")
+					# se houver portas abertas as informa
 
 else:
         print("Nenhuma porta entre 1 e 1023 aberta.")
