@@ -12,8 +12,15 @@ if len(sys.argv) < 2 or len(sys.argv) >= 4:
 
 
 elif len(sys.argv) == 2:    
-        portas = range(1,1024) # range de portas a ser escaneado
-			       # caso nenhuma porta seja especificada
+
+	if len(sys.argv[1].split('.')) == 4: # valida se IPv4 foi passado
+
+        	portas = range(1,1024) # range de portas a ser escaneado
+				       # caso nenhuma porta seja especificada
+	else:
+		print("Certifique-se de passar um endereço IPv4")
+		sys.exit(0)
+
 else:
         try:
                 portas = [int(n) for n in sys.argv[2].split(',')]
