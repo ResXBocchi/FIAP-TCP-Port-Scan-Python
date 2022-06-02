@@ -4,33 +4,51 @@ import sys
 
 #rm95147
 
+def valida_ip(ip):
+
+        if len(ip.split('.')) != 4: # valida se IPv4 foi passado 
+                print("Certifique-se de passar um endereço IPv4\n")
+                sys.exit(0)
+
+
 if len(sys.argv) < 2 or len(sys.argv) >= 4:
         print("Modo de uso:\npython3 FIAPortScan.py <ip> [ports - default 1-1023]")
         print("python3 FIAPortScan.py 127.0.0.1 22,80")
         print("python3 FIAPortScan.py 127.0.0.1")
+        print("python3 FIAPortScan.py -i - Modo interativo")
         sys.exit(0) # se os parametros estiverem fora do esperado orienta o usuario
-
 
 elif len(sys.argv) == 2:    
 
-	if len(sys.argv[1].split('.')) == 4: # valida se IPv4 foi passado
+        if sys.argv[1] == "-i":
+                
+                ip = input("Insira o IP a ser escaneado\n")
+                valida_ip(ip)
 
-        	portas = range(1,1024) # range de portas a ser escaneado
-				       # caso nenhuma porta seja especificada
-	else:
-		print("Certifique-se de passar um endereço IPv4")
-		sys.exit(0)
+                portas = input("Insira a porta, ou portas separadas por virgulas\n")
+
+                if portas != "":
+                        portas = [int(n) for n in portas.split(',')]
+                else:
+                        portas = range(1,1024)
+        else:
+
+                ip = sys.argv[1]
+                valida_ip(ip)
+                portas = range(1,1024) # range de portas a ser escaneado
+                                       # caso nenhuma porta seja especificada
 
 else:
         try:
+                ip = sys.argv[1]
+                valida_ip(ip)
                 portas = [int(n) for n in sys.argv[2].split(',')]
-				# list comprehension para converter a string de
-				# portas separadas por virgulas em numeros inteiros
+                                # list comprehension para converter a string de
+                                # portas separadas por virgulas em numeros inteiros
         except:
                 pass
 
 abertas = [] # lista de portas abertas
-ip = sys.argv[1] # ip passado por argumento do script
 
 for porta in portas: # realiza as etapas abaixo nas portas do range
 
@@ -45,9 +63,9 @@ for porta in portas: # realiza as etapas abaixo nas portas do range
 if len(abertas) != 0:
         print("Portas abertas: {}".format(abertas))
 
-        print("As demais entre 1 e 1023 estão fechadas" if len(sys.argv) == 2 else\
-	      "As demais dentre as portas especificadas estao fechadas")
-					# se houver portas abertas as informa
+        print("As demais entre 1 e 1023 estão fechadas" if len(sys.argv) == 2 or sys.argv[1] != "-i" and portas != range(1,1024) else\
+              "As demais dentre as portas especificadas estao fechadas")
+                                        # se houver portas abertas as informa
 
 else:
         print("Nenhuma porta entre 1 e 1023 aberta.")
