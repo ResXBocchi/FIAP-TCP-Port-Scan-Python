@@ -20,7 +20,7 @@ if len(sys.argv) < 2 or len(sys.argv) >= 4:
 
 elif len(sys.argv) == 2:    
 
-        if sys.argv[1] == "-i":
+        if sys.argv[1] == "-i": #verifica e implementa o modo interativo
                 
                 ip = input("Insira o IP a ser escaneado\n")
                 valida_ip(ip)
