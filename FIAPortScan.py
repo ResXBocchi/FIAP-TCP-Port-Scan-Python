@@ -53,5 +53,5 @@ else:
         ip = sys.argv[1]
         valida_ip(ip)
         portas = [int(n) for n in sys.argv[2].split(',')] if len(sys.argv) == 3 else range(1,1024)
-	scan(ip,portas)
+        scan(ip,portas)
 #rm95147
